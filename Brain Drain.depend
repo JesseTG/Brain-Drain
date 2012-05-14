@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1333408577 source:/home/jesse/Desktop/Code/Brain Drain/main.cpp
+	"main.h"
+	<iostream>
+
+1333408576 /home/jesse/Desktop/Code/Brain Drain/main.h
+	<FL/Fl.H>
+	<FL/Fl_Double_Window.H>
+	<FL/Fl_Input.H>
+	<FL/Fl_Button.H>
+	<FL/Fl_Return_Button.H>
+
