@@ -30,14 +30,15 @@
 		<Compiler>
 			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
-			<Add option="`fltk-config --cxxflags`" />
 		</Compiler>
 		<Linker>
-			<Add option="`fltk-config --ldstaticflags`" />
+			<Add library="libboost_program_options" />
 		</Linker>
-		<Unit filename="include/brainfuck.h" />
+		<Unit filename="include/Brainfuck.h" />
+		<Unit filename="include/CommandLineHandler.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/brainfuck.cpp" />
+		<Unit filename="src/Brainfuck.cpp" />
+		<Unit filename="src/CommandLineHandler.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

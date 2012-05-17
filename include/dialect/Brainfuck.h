@@ -18,22 +18,19 @@ class Brainfuck
         Brainfuck(const std::string& newfilename);
         virtual ~Brainfuck();
 
-        void open();
 
-        std::string getFileName() const { return filename; }
-        virtual void nextInstruction();
+
+
+
 
     protected:
         uint8_t storage;
-        uint64_t current_instruction;
-        int64_t index;
-        std::string filename;
         std::ifstream file;
         std::string program;
         std::vector<uint8_t> tape;
         std::stack<int64_t> jumpposition;
 
-        std::unordered_map<char, std::function<void()>> instructions;
+
 
 };
 

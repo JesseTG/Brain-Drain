@@ -10,10 +10,11 @@
 	<FL/Fl_Button.H>
 	<FL/Fl_Return_Button.H>
 
-1337036241 source:/home/jesse/Desktop/Code/Brain_Drain/main.cpp
+1337042283 source:/home/jesse/Desktop/Code/Brain_Drain/main.cpp
 	<iostream>
 	<boost/program_options.hpp>
 	<boost/lexical_cast.hpp>
+	"./include/CommandLineHandler.h"
 	"./include/Brainfuck.h"
 
 1337032532 source:/home/jesse/Desktop/Code/Brain_Drain/src/brainfuck.cpp
@@ -44,4 +45,10 @@
 
 1337036101 source:/home/jesse/Desktop/Code/Brain_Drain/src/Brainfuck.cpp
 	"../include/Brainfuck.h"
+
+1337042365 /home/jesse/Desktop/Code/Brain_Drain/include/CommandLineHandler.h
+	<boost/program_options.hpp>
+
+1337042219 source:/home/jesse/Desktop/Code/Brain_Drain/src/CommandLineHandler.cpp
+	"../include/CommandLineHandler.h"
 

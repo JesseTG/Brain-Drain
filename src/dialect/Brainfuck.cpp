@@ -33,7 +33,7 @@ Brainfuck::Brainfuck(const std::string& newfilename)
         if (tape[index]) index = jumpposition.top();
         else jumpposition.pop();
     };
-    instructions['@'] = [this] () {
+    /*instructions['@'] = [this] () {
         exit(0);
     };
     instructions['$'] = [this] () {
@@ -59,7 +59,7 @@ Brainfuck::Brainfuck(const std::string& newfilename)
     };
     instructions['|'] = [this] () {
         tape[index] |= storage;
-    };
+    };*/
 
 
 }
