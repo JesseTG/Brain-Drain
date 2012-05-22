@@ -1,24 +1,35 @@
 #ifndef ABSTRACTBF_H
 #define ABSTRACTBF_H
 
+#include "Declarations.h"
 
 class AbstractBF
 {
     public:
-        AbstractBF(const std::string& newfilename);
-        virtual ~AbstractBF();
+        AbstractBF();
+        AbstractBF(const std::string& newfilename) :
+            currentinstruction(0),
+            index(0)
+            {}
+        virtual ~AbstractBF() {}
+        virtual void open() = 0;
 
         std::string getFileName() const { return filename; }
-        virtual void nextInstruction() = 0;
 
     protected:
+        virtual void nextInstruction() = 0;
+        virtual void run() = 0;
         uint64_t currentinstruction;
         int64_t index;
         std::unordered_map<char, std::function<void()>> instructions;
+        std::vector<uint8_t> tape;
+        std::string filename;
+        boost::regex pattern;
+        std::ifstream file;
 
     private:
-        std::string filename;
-        std::ifstream file;
+
+
 };
 
 #endif // ABSTRACTBF_H

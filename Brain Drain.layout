@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
-	<File name="include/Brainfuck.h" open="1" top="0" tabpos="2">
-		<Cursor position="237" topLine="13" />
+	<ActiveTarget name="Debug" />
+	<File name="include/AbstractBF.h" open="1" top="0" tabpos="5">
+		<Cursor position="68" topLine="3" />
 	</File>
-	<File name="include/CommandLineHandler.h" open="1" top="0" tabpos="4">
-		<Cursor position="355" topLine="0" />
+	<File name="include/CommandLineHandler.h" open="1" top="0" tabpos="1">
+		<Cursor position="372" topLine="3" />
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="136" topLine="0" />
+	<File name="include/Declarations.h" open="1" top="0" tabpos="7">
+		<Cursor position="264" topLine="0" />
 	</File>
-	<File name="src/Brainfuck.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="1915" topLine="0" />
+	<File name="include/dialect/Brainfuck.h" open="1" top="0" tabpos="3">
+		<Cursor position="400" topLine="0" />
 	</File>
-	<File name="src/CommandLineHandler.cpp" open="1" top="1" tabpos="5">
-		<Cursor position="754" topLine="0" />
+	<File name="main.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="419" topLine="0" />
+	</File>
+	<File name="src/AbstractBF.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="36" topLine="0" />
+	</File>
+	<File name="src/CommandLineHandler.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="963" topLine="21" />
+	</File>
+	<File name="src/dialect/Brainfuck.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="412" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

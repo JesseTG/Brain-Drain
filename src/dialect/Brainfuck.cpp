@@ -1,10 +1,11 @@
-#include "../include/Brainfuck.h"
+#include "../../include/dialect/Brainfuck.h"
 
 Brainfuck::Brainfuck(const std::string& newfilename)
 {
-    filename = newfilename;
-    current_instruction = 0;
     index = 0;
+    currentinstruction = 0;
+    filename = newfilename;
+    pattern = boost::regex("[><+-.,[]@$!}{~^&|]", boost::regex::basic);
 
     instructions['>'] = [this] () {
         ++index;
@@ -12,7 +13,7 @@ Brainfuck::Brainfuck(const std::string& newfilename)
     };
     instructions['<'] = [this] () {
         --index;
-        if (index < 0) throw std::runtime_error("Error in program " + filename + "!  Pointer has fallen below 0!");
+        if (index < 0) throw std::runtime_error("Error in program \"" + filename + "\"!  Pointer has fallen below 0!");
     };
     instructions['+'] = [this] () {
         ++tape[index];
@@ -72,17 +73,21 @@ Brainfuck::~Brainfuck()
 void Brainfuck::open()
 {
     file.open(filename);
-    if (!file.good()) throw std::runtime_error("Could not open " + filename + "!  Does it really exist?");
 
-    file >> program;
-    std::regex pattern("[^(><+-.,[]@$!}{~^&|)]", std::regex_constants::basic);
+    if (!file.good()) throw std::runtime_error("Could not open file \"" + filename + "\"!  Does it really exist?");
 
+    std::ostringstream temp;
+    temp << file.rdbuf();
+
+    program = boost::regex_replace(temp.str(), pattern, std::string(""));
+    std::cout << boost::regex_match(temp.str(), pattern);
+    std::cout << program;
 }
 
 void Brainfuck::nextInstruction()
 {
     try {
-        instructions.at(current_instruction++)();
+        instructions.at(currentinstruction++)();
     }
     catch (std::out_of_range) {
         return;
