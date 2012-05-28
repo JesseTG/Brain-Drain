@@ -18,6 +18,7 @@ int main(int argc, char **argv)
     if (CommandLine.isValid()) {
         program.reset(CommandLine.getDialect());
         program->open();
+        program->run();
     }
     else
         CommandLine.printHelp();

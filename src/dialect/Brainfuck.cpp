@@ -2,37 +2,62 @@
 
 Brainfuck::Brainfuck(const std::string& newfilename)
 {
-    index = 0;
-    currentinstruction = 0;
+    tape.reserve(30000);
+    index = tape.data();
+    std::fill(tape.begin(), tape.end(), 0);
     filename = newfilename;
-    pattern = boost::regex("[><+-.,[]@$!}{~^&|]", boost::regex::basic);
+    pattern = boost::regex("[^]><+.,[@$!}{~^&|-]", boost::regex::basic);
 
-    instructions['>'] = [this] () {
+    instructions['>'] = [&, this] () {
+        if (*index == tape.back()) tape.push_back(0);
         ++index;
-        if (index >= tape.size()) tape.push_back(0);
     };
-    instructions['<'] = [this] () {
+    instructions['<'] = [&, this] () {
         --index;
-        if (index < 0) throw std::runtime_error("Error in program \"" + filename + "\"!  Pointer has fallen below 0!");
+        if (index < tape.data()) throw std::runtime_error("Error in program \"" + filename + "\"!  Pointer has fallen below 0!");
     };
-    instructions['+'] = [this] () {
-        ++tape[index];
+    instructions['+'] = [&, this] () {
+        ++*index;
     };
-    instructions['-'] = [this] () {
-        --tape[index];
+    instructions['-'] = [&, this] () {
+        --*index;
     };
-    instructions['.'] = [this] () {
-        std::cout << tape[index];
+    instructions['.'] = [&, this] () {
+        std::cout << *index;
     };
-    instructions[','] = [this] () {
-        tape[index] = getchar();
+    instructions[','] = [&, this] () {
+        *index = getchar();
     };
-    instructions['['] = [this] () {
-        if (tape[index]) jumpposition.push(index);
+    instructions['['] = [&, this] () {
+        if (*index == 0) {  //If the value under the pointer is 0, go past the matching ]
+            std::stack<char> tempbracestack;
+
+            while (true) {
+                if (*currentinstruction == '[')
+                    tempbracestack.push(*currentinstruction);
+                else if (*currentinstruction == ']')
+                    tempbracestack.pop();
+
+                ++currentinstruction;
+                if (tempbracestack.empty()) return;
+            }
+        }
     };
-    instructions[']'] = [this] () {
-        if (tape[index]) index = jumpposition.top();
-        else jumpposition.pop();
+    instructions[']'] = [&, this] () {
+        if (*index != 0) {  //If the value under the pointer isn't 0, go back to the matching [
+            std::stack<char> tempbracestack;
+
+            while (true) {
+                if (*currentinstruction == ']')
+                    tempbracestack.push(*currentinstruction);
+                else if (*currentinstruction == '[')
+                    tempbracestack.pop();
+
+                --currentinstruction;
+                if (tempbracestack.empty()) return;
+            }
+
+        }
     };
     /*instructions['@'] = [this] () {
         exit(0);
@@ -80,16 +105,38 @@ void Brainfuck::open()
     temp << file.rdbuf();
 
     program = boost::regex_replace(temp.str(), pattern, std::string(""));
-    std::cout << boost::regex_match(temp.str(), pattern);
-    std::cout << program;
+    currentinstruction = program.data();
+
+    checkLoops();
+}
+
+void Brainfuck::run()
+{
+    while (currentinstruction <= &program.back()) nextInstruction();
+}
+
+void Brainfuck::checkLoops()
+{
+    std::stack<char> tempbracestack;  //The indicies are the ['s, their elements are the ]'s
+
+    for (char i : program) {
+        if (i == '[')
+            tempbracestack.push(i);
+        else if (i == ']')
+            tempbracestack.pop();
+    }
+
+    if (!tempbracestack.empty())
+        throw std::runtime_error("Program \"" + filename + "\" does not balance braces ([]) correctly!");
 }
 
 void Brainfuck::nextInstruction()
 {
+    //std::cout << currentinstruction << std::endl;
     try {
-        instructions.at(currentinstruction++)();
+        instructions.at(*currentinstruction)();
     }
-    catch (std::out_of_range) {
-        return;
+    catch (std::out_of_range e) {
     }
+    currentinstruction++;
 }

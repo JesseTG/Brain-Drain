@@ -1,6 +1,8 @@
 #ifndef DECLARATIONS_H_INCLUDED
 #define DECLARATIONS_H_INCLUDED
 
+#include <boost/lexical_cast.hpp>
+
 #include <iostream>
 #include <cstdio>
 #include <stdexcept>
