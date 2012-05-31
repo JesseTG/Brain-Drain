@@ -9,28 +9,34 @@ Brainfuck::Brainfuck(const std::string& newfilename)
     pattern = boost::regex("[^]><+.,[@$!}{~^&|-]", boost::regex::basic);
 
     instructions['>'] = [&, this] () {
-        if (index == (tape.data() + tape.size())) tape.push_back(0);
+    //    std::cout << "Index right\n";
+
         ++index;
+        if (index == (tape.data() + tape.size())) tape.push_back(0);
     };
     instructions['<'] = [&, this] () {
+   //     std::cout << "Index left\n";
         --index;
         if (index < tape.data()) throw std::runtime_error("Error in program \"" + filename + "\"!  Pointer has fallen below 0!");
     };
     instructions['+'] = [&, this] () {
-        ++*index;
+        ++(*index);
+   //     std::cout << "Value Up, now " << int(*index) << "\n";
     };
     instructions['-'] = [&, this] () {
-        --*index;
+        --(*index);
+  //      std::cout << "Value down, now " << int(*index) << "\n";
     };
     instructions['.'] = [&, this] () {
-        std::cout << "Output\n";
-        std::cout << *index;
+  //      std::cout << "Output\n";
+        std::cout << *index;//(iscntrl(*index) ? int(*index) : *index);
     };
     instructions[','] = [&, this] () {
+ //       std::cout << "Input\n";
         *index = getchar();
     };
     instructions['['] = [&, this] () {
-        std::cout << "Begin Brace\n";
+//       std::cout << "Begin Brace\n";
         if (!*index) {  //If the value under the pointer is 0, go past the matching ]
             int64_t tempbrace = 0;
 
@@ -44,7 +50,7 @@ Brainfuck::Brainfuck(const std::string& newfilename)
         }
     };
     instructions[']'] = [&, this] () {
-        std::cout << "End Brace\n";
+  //      std::cout << "End Brace\n";
         if (*index) {  //If the value under the pointer isn't 0, go back to the matching [
             int64_t tempbrace = 0;
 
@@ -130,7 +136,8 @@ void Brainfuck::checkLoops()
 
 void Brainfuck::nextInstruction()
 {
-    //std::cout << currentinstruction << std::endl;
+   // std::cout << "Current Instruction: " << *currentinstruction << "    Address: " << currentinstruction << std::endl
+    //          << "Index: " << index << "    Value: " << int(*index) << "\n\n";
     try {
         instructions.at(*currentinstruction)();
     }
