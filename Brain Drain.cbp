@@ -15,6 +15,7 @@
 				<Compiler>
 					<Add option="-std=c++0x" />
 					<Add option="-g" />
+					<Add option="-fpermissive" />
 				</Compiler>
 			</Target>
 			<Target title="Release">

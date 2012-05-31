@@ -9,7 +9,7 @@ Brainfuck::Brainfuck(const std::string& newfilename)
     pattern = boost::regex("[^]><+.,[@$!}{~^&|-]", boost::regex::basic);
 
     instructions['>'] = [&, this] () {
-        if (*index == tape.back()) tape.push_back(0);
+        if (index == (tape.data() + tape.size())) tape.push_back(0);
         ++index;
     };
     instructions['<'] = [&, this] () {
@@ -23,40 +23,38 @@ Brainfuck::Brainfuck(const std::string& newfilename)
         --*index;
     };
     instructions['.'] = [&, this] () {
+        std::cout << "Output\n";
         std::cout << *index;
     };
     instructions[','] = [&, this] () {
         *index = getchar();
     };
     instructions['['] = [&, this] () {
-        if (*index == 0) {  //If the value under the pointer is 0, go past the matching ]
-            std::stack<char> tempbracestack;
+        std::cout << "Begin Brace\n";
+        if (!*index) {  //If the value under the pointer is 0, go past the matching ]
+            int64_t tempbrace = 0;
 
             while (true) {
-                if (*currentinstruction == '[')
-                    tempbracestack.push(*currentinstruction);
-                else if (*currentinstruction == ']')
-                    tempbracestack.pop();
+                if (*currentinstruction == '[') ++tempbrace;
+                else if (*currentinstruction == ']') --tempbrace;
 
-                ++currentinstruction;
-                if (tempbracestack.empty()) return;
+                if (!tempbrace) return;
+                else ++currentinstruction;
             }
         }
     };
     instructions[']'] = [&, this] () {
-        if (*index != 0) {  //If the value under the pointer isn't 0, go back to the matching [
-            std::stack<char> tempbracestack;
+        std::cout << "End Brace\n";
+        if (*index) {  //If the value under the pointer isn't 0, go back to the matching [
+            int64_t tempbrace = 0;
 
             while (true) {
-                if (*currentinstruction == ']')
-                    tempbracestack.push(*currentinstruction);
-                else if (*currentinstruction == '[')
-                    tempbracestack.pop();
+                if (*currentinstruction == ']') ++tempbrace;
+                else if (*currentinstruction == '[') --tempbrace;
 
-                --currentinstruction;
-                if (tempbracestack.empty()) return;
+                if (!tempbrace) return;
+                else --currentinstruction;
             }
-
         }
     };
     /*instructions['@'] = [this] () {
@@ -117,9 +115,9 @@ void Brainfuck::run()
 
 void Brainfuck::checkLoops()
 {
-    std::stack<char> tempbracestack;  //The indicies are the ['s, their elements are the ]'s
+    std::stack<char> tempbracestack;
 
-    for (char i : program) {
+    for (const char i : program) {
         if (i == '[')
             tempbracestack.push(i);
         else if (i == ']')
@@ -136,7 +134,7 @@ void Brainfuck::nextInstruction()
     try {
         instructions.at(*currentinstruction)();
     }
-    catch (std::out_of_range e) {
+    catch (std::out_of_range) {
     }
     currentinstruction++;
 }
