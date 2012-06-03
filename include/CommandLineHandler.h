@@ -3,6 +3,7 @@
 
 #include "Declarations.h"
 #include "./dialect/Brainfuck.h"
+#include "./dialect/Brainfuck_X1.h"
 
 
 #include <boost/program_options.hpp>

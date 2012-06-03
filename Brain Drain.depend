@@ -10,12 +10,12 @@
 	<FL/Fl_Button.H>
 	<FL/Fl_Return_Button.H>
 
-1337728163 source:/home/jesse/Desktop/Code/Brain_Drain/main.cpp
+1338676291 source:/home/jesse/Desktop/Code/Brain_Drain/main.cpp
 	<iostream>
 	<boost/program_options.hpp>
 	<boost/lexical_cast.hpp>
 	"./include/Declarations.h"
-	"include/CommandLineHandler.h"
+	"./include/CommandLineHandler.h"
 
 1337032532 source:/home/jesse/Desktop/Code/Brain_Drain/src/brainfuck.cpp
 	"../include/brainfuck.h"
@@ -46,39 +46,44 @@
 1337036101 source:/home/jesse/Desktop/Code/Brain_Drain/src/Brainfuck.cpp
 	"../include/Brainfuck.h"
 
-1337632793 /home/jesse/Desktop/Code/Brain_Drain/include/CommandLineHandler.h
+1338676470 /home/jesse/Desktop/Code/Brain_Drain/include/CommandLineHandler.h
 	"Declarations.h"
 	"./dialect/Brainfuck.h"
+	"./dialect/Brainfuck_X1.h"
 	<boost/program_options.hpp>
 
-1337632922 source:/home/jesse/Desktop/Code/Brain_Drain/src/CommandLineHandler.cpp
+1338688363 source:/home/jesse/Desktop/Code/Brain_Drain/src/CommandLineHandler.cpp
 	"../include/CommandLineHandler.h"
 
-1338424921 /home/jesse/Desktop/Code/Brain_Drain/include/Declarations.h
-	<boost/lexical_cast.hpp>
-	<iostream>
-	<cstdio>
-	<stdexcept>
-	<vector>
-	<stack>
-	<functional>
+1338676804 /home/jesse/Desktop/Code/Brain_Drain/include/Declarations.h
 	<boost/regex.hpp>
+	<iostream>
 	<fstream>
-	<string>
-	<sstream>
-	<unordered_map>
+	<functional>
 	<memory>
+	<sstream>
+	<stack>
+	<stdexcept>
+	<string>
+	<unordered_map>
+	<vector>
 
-1338424917 /home/jesse/Desktop/Code/Brain_Drain/include/AbstractBF.h
+1338684575 /home/jesse/Desktop/Code/Brain_Drain/include/AbstractBF.h
 	"Declarations.h"
 
-1338235634 /home/jesse/Desktop/Code/Brain_Drain/include/dialect/Brainfuck.h
+1338688247 /home/jesse/Desktop/Code/Brain_Drain/include/dialect/Brainfuck.h
 	"../Declarations.h"
 	"../AbstractBF.h"
 
-1337639604 source:/home/jesse/Desktop/Code/Brain_Drain/src/AbstractBF.cpp
+1338677111 source:/home/jesse/Desktop/Code/Brain_Drain/src/AbstractBF.cpp
 	"../include/AbstractBF.h"
 
-1338424546 source:/home/jesse/Desktop/Code/Brain_Drain/src/dialect/Brainfuck.cpp
+1338688298 source:/home/jesse/Desktop/Code/Brain_Drain/src/dialect/Brainfuck.cpp
 	"../../include/dialect/Brainfuck.h"
+
+1338688307 source:/home/jesse/Desktop/Code/Brain_Drain/src/dialect/Brainfuck_X1.cpp
+	"../../include/dialect/Brainfuck_X1.h"
+
+1338688230 /home/jesse/Desktop/Code/Brain_Drain/include/dialect/Brainfuck_X1.h
+	"./Brainfuck.h"
 

@@ -6,7 +6,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "./include/Declarations.h"
-#include "include/CommandLineHandler.h"
+#include "./include/CommandLineHandler.h"
 
 using namespace boost::program_options;
 

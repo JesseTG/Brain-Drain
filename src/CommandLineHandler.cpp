@@ -23,12 +23,23 @@ CommandLineHandler::CommandLineHandler(int argc, char **argv)
 }
 
 AbstractBF* CommandLineHandler::getDialect() {
+    std::string dialect = arguments["dialect"].as<std::string>();
+    std::string filename = arguments["file"].as<std::string>();
 
-    if (arguments.count("dialect") && arguments["dialect"].as<std::string>() == "brainfuck")
-        return new Brainfuck(arguments["file"].as<std::string>());
+    if (arguments.count("dialect")) {
+        if (dialect == "brainfuck") return new Brainfuck(filename);
+        else if (dialect == "brainfuck-x1") return new Brainfuck_X1(filename);
+    }
+
+    try {
+        throw std::invalid_argument("The \"" + dialect + "\" dialect, if it really exists, is not supported!");
+    }
+    catch (std::invalid_argument& e) {
+        std::cout << e.what() << std::endl;
+        exit(EXIT_FAILURE);
+    }
 
     return nullptr;
-    //TODO: Load if a filename was specified, show docs if not
 }
 
 void CommandLineHandler::initDialects()

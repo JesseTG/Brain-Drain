@@ -6,37 +6,41 @@ Brainfuck::Brainfuck(const std::string& newfilename)
     index = tape.data();
     std::fill(tape.begin(), tape.end(), 0);
     filename = newfilename;
-    pattern = boost::regex("[^]><+.,[@$!}{~^&|-]", boost::regex::basic);
+    pattern = boost::regex("[^]><+.,[-]", boost::regex::basic);
+    initInstructions();
+}
 
-    instructions['>'] = [&, this] () {
-    //    std::cout << "Index right\n";
-
+void Brainfuck::initInstructions()
+{
+    instructions['>'] = [&, this] () {  //Move the pointer to the right
         ++index;
         if (index == (tape.data() + tape.size())) tape.push_back(0);
     };
-    instructions['<'] = [&, this] () {
-   //     std::cout << "Index left\n";
+    instructions['<'] = [&, this] () {  //Move the pointer to the lefyt
         --index;
-        if (index < tape.data()) throw std::runtime_error("Error in program \"" + filename + "\"!  Pointer has fallen below 0!");
+        try {
+            if (index < tape.data())
+                throw std::runtime_error("Error in program \"" + filename + "\"!  Pointer has fallen below 0!");
+        }
+        catch (std::runtime_error& e) {
+            std::cout << e.what() << std::endl;
+            exit(EXIT_FAILURE);
+        }
     };
-    instructions['+'] = [&, this] () {
+    instructions['+'] = [&, this] () {  //Increment the value at the pointer
         ++(*index);
-   //     std::cout << "Value Up, now " << int(*index) << "\n";
     };
-    instructions['-'] = [&, this] () {
+    instructions['-'] = [&, this] () {  //Decrement the value at the pointer
         --(*index);
-  //      std::cout << "Value down, now " << int(*index) << "\n";
     };
-    instructions['.'] = [&, this] () {
-  //      std::cout << "Output\n";
-        std::cout << *index;//(iscntrl(*index) ? int(*index) : *index);
+    instructions['.'] = [&, this] () {  //Output the ASCII character at the pointer
+        std::cout << *index;
     };
-    instructions[','] = [&, this] () {
- //       std::cout << "Input\n";
-        *index = getchar();
+    instructions[','] = [&, this] () {  //Get one character of input
+        std::cin >> *index;
     };
-    instructions['['] = [&, this] () {
-//       std::cout << "Begin Brace\n";
+    instructions['['] = [&, this] () {  //Begin a loop
+
         if (!*index) {  //If the value under the pointer is 0, go past the matching ]
             int64_t tempbrace = 0;
 
@@ -49,8 +53,8 @@ Brainfuck::Brainfuck(const std::string& newfilename)
             }
         }
     };
-    instructions[']'] = [&, this] () {
-  //      std::cout << "End Brace\n";
+    instructions[']'] = [&, this] () {  //End a loop
+
         if (*index) {  //If the value under the pointer isn't 0, go back to the matching [
             int64_t tempbrace = 0;
 
@@ -63,50 +67,23 @@ Brainfuck::Brainfuck(const std::string& newfilename)
             }
         }
     };
-    /*instructions['@'] = [this] () {
-        exit(0);
-    };
-    instructions['$'] = [this] () {
-        storage = tape[index];
-    };
-    instructions['!'] = [this] () {
-        tape[index] = storage;
-    };
-    instructions['}'] = [this] () {
-        tape[index] >>= 1;
-    };
-    instructions['{'] = [this] () {
-        tape[index] <<= 1;
-    };
-    instructions['~'] = [this] () {
-        tape[index] = ~tape[index];
-    };
-    instructions['^'] = [this] () {
-        tape[index] ^= storage;
-    };
-    instructions['&'] = [this] () {
-        tape[index] &= storage;
-    };
-    instructions['|'] = [this] () {
-        tape[index] |= storage;
-    };*/
-
-
-}
-
-Brainfuck::~Brainfuck()
-{
-    //dtor
 }
 
 void Brainfuck::open()
 {
     file.open(filename);
 
-    if (!file.good()) throw std::runtime_error("Could not open file \"" + filename + "\"!  Does it really exist?");
+    try {
+        if (!file.good()) throw std::runtime_error("Could not open file \"" + filename + "\"!  Does it really exist?");
+    }
+    catch (std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+        exit(EXIT_FAILURE);
+    }
 
     std::ostringstream temp;
     temp << file.rdbuf();
+    file.close();
 
     program = boost::regex_replace(temp.str(), pattern, std::string(""));
     currentinstruction = program.data();
@@ -130,18 +107,22 @@ void Brainfuck::checkLoops()
             tempbracestack.pop();
     }
 
-    if (!tempbracestack.empty())
-        throw std::runtime_error("Program \"" + filename + "\" does not balance braces ([]) correctly!");
+    try {
+        if (!tempbracestack.empty())
+            throw std::runtime_error("Program \"" + filename + "\" does not balance braces ([]) correctly!");
+    }
+    catch (std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+        exit(EXIT_FAILURE);
+    }
 }
 
 void Brainfuck::nextInstruction()
 {
-   // std::cout << "Current Instruction: " << *currentinstruction << "    Address: " << currentinstruction << std::endl
-    //          << "Index: " << index << "    Value: " << int(*index) << "\n\n";
     try {
         instructions.at(*currentinstruction)();
     }
-    catch (std::out_of_range) {
+    catch (std::out_of_range&) {
     }
     currentinstruction++;
 }

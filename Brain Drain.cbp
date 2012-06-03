@@ -35,9 +35,6 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-fexpensive-optimizations" />
-			<Add option="-Os" />
-			<Add option="-O3" />
 			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
 		</Compiler>
@@ -49,10 +46,12 @@
 		<Unit filename="include/CommandLineHandler.h" />
 		<Unit filename="include/Declarations.h" />
 		<Unit filename="include/dialect/Brainfuck.h" />
+		<Unit filename="include/dialect/Brainfuck_X1.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/AbstractBF.cpp" />
 		<Unit filename="src/CommandLineHandler.cpp" />
 		<Unit filename="src/dialect/Brainfuck.cpp" />
+		<Unit filename="src/dialect/Brainfuck_X1.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

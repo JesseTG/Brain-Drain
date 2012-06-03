@@ -9,16 +9,16 @@ class Brainfuck : public AbstractBF
     public:
         Brainfuck() {}
         Brainfuck(const std::string& newfilename);
-        virtual ~Brainfuck();
+        virtual ~Brainfuck() {}
         virtual void open();
-
+        virtual void initInstructions();
         virtual void run();
 
 
     protected:
+
         virtual void nextInstruction();
         virtual void checkLoops();
-        uint8_t storage;
         std::string program;
         char *currentinstruction;  //Which character in the program is being processed
 };

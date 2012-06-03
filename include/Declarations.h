@@ -1,23 +1,22 @@
 #ifndef DECLARATIONS_H_INCLUDED
 #define DECLARATIONS_H_INCLUDED
 
-#include <boost/lexical_cast.hpp>
+#include <boost/regex.hpp>
 
 #include <iostream>
-#include <cstdio>
-#include <stdexcept>
-#include <vector>
-#include <stack>
-#include <functional>
-#include <boost/regex.hpp>
 #include <fstream>
-#include <string>
-#include <sstream>
-#include <unordered_map>
+#include <functional>
 #include <memory>
+#include <sstream>
+#include <stack>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 class AbstractBF;
 class Brainfuck;
+class Brainfuck_X1;
 class CommandLineHandler;
 
 #endif // DECLARATIONS_H_INCLUDED
