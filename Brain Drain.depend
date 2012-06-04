@@ -46,7 +46,7 @@
 1337036101 source:/home/jesse/Desktop/Code/Brain_Drain/src/Brainfuck.cpp
 	"../include/Brainfuck.h"
 
-1338676470 /home/jesse/Desktop/Code/Brain_Drain/include/CommandLineHandler.h
+1338756534 /home/jesse/Desktop/Code/Brain_Drain/include/CommandLineHandler.h
 	"Declarations.h"
 	"./dialect/Brainfuck.h"
 	"./dialect/Brainfuck_X1.h"
@@ -78,10 +78,10 @@
 1338677111 source:/home/jesse/Desktop/Code/Brain_Drain/src/AbstractBF.cpp
 	"../include/AbstractBF.h"
 
-1338688298 source:/home/jesse/Desktop/Code/Brain_Drain/src/dialect/Brainfuck.cpp
+1338689317 source:/home/jesse/Desktop/Code/Brain_Drain/src/dialect/Brainfuck.cpp
 	"../../include/dialect/Brainfuck.h"
 
-1338688307 source:/home/jesse/Desktop/Code/Brain_Drain/src/dialect/Brainfuck_X1.cpp
+1338688619 source:/home/jesse/Desktop/Code/Brain_Drain/src/dialect/Brainfuck_X1.cpp
 	"../../include/dialect/Brainfuck_X1.h"
 
 1338688230 /home/jesse/Desktop/Code/Brain_Drain/include/dialect/Brainfuck_X1.h

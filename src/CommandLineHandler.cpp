@@ -1,7 +1,6 @@
 #include "../include/CommandLineHandler.h"
 
 positional_options_description CommandLineHandler::pd;
-options_description CommandLineHandler::dialects("Available Brainfuck Dialects");
 options_description CommandLineHandler::options("Valid Options");
 variables_map CommandLineHandler::arguments;
 
@@ -44,15 +43,20 @@ AbstractBF* CommandLineHandler::getDialect() {
 
 void CommandLineHandler::initDialects()
 {
-    dialects.add_options()
-        ("brainfuck"  , "Brainfuck (default)")
-        ("brainfuck-x1", "Extended Brainfuck Type I")
-        ("brainfuck-x2", "Extended Brainfuck Type II");
+    dialects["brainfuck"   ] = "Brainfuck (default)";
+    dialects["brainfuck-x1"] = "Extended Brainfuck Type I";
+    dialects["brainfuck-x2"] = "Extended Brainfuck Type II (Not Implemented)";
+    dialects["brainfuck-x3"] = "Extended Brainfuck Type III (Not Implemented)";
 }
 
-bool CommandLineHandler::isValid()
+bool CommandLineHandler::isValid() const
 {
     return arguments.count("file");
+}
+
+bool CommandLineHandler::doesDialectExist(const std::string& thedialect) const
+{
+    return dialects.find(thedialect) != dialects.end();
 }
 
 void CommandLineHandler::printHelp()
@@ -61,13 +65,24 @@ void CommandLineHandler::printHelp()
     exit(EXIT_SUCCESS);
 }
 
+void CommandLineHandler::printDialects()
+{
+    std::cout << "Dialect list not yet implemented." << std::endl;
+    exit(EXIT_SUCCESS);
+}
+
+void CommandLineHandler::printAbout()
+{
+    std::cout << "Copyright 2012 Corundum Media Group\n";
+    exit(EXIT_SUCCESS);
+}
+
 void CommandLineHandler::handleArguments()
 {
     if (arguments.count("help") || arguments.size() < 1) {
         printHelp();
     }
-    else if (arguments.count("dialect")) {
-        std::cout << dialects << std::endl;
-        exit(EXIT_SUCCESS);
+    else if (arguments.count("dialect") || !doesDialectExist(arguments["dialect"].as<std::string>())) {
+        printDialects();
     }
 }

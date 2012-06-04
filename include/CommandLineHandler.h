@@ -16,19 +16,23 @@ class CommandLineHandler
         CommandLineHandler(int argc, char **argv);
         ~CommandLineHandler() {}
 
-        bool isValid();
+        bool isValid() const;
+
         void printHelp();
 
         AbstractBF* getDialect();
 
     private:
+        bool doesDialectExist(const std::string& thedialect) const;
         void initDialects();
         void handleArguments();
+        void printDialects();
+        void printAbout();
 
-        static options_description options;
-        static options_description dialects;
-        static variables_map arguments;
-        static positional_options_description pd;
+        static boost::program_options::options_description            options;
+        static std::unordered_map<std::string, std::string>           dialects;
+        static boost::program_options::                               variables_map arguments;
+        static boost::program_options::positional_options_description pd;
 
 };
 
